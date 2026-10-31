@@ -134,7 +134,15 @@
 {% endif %} 
 
 {% if expenses %}
-
+  <!-- Live search box (jQuery) -->
+  <div class="col-md-12 mt-2">
+    <input
+      type="text"
+      id="expense-search"
+      class="form-control"
+      placeholder="Search expenses by date, source, category or content..."
+    />
+  </div>
   <div id="expense-table" class="expense-table" data-test="expense-table">
     <table class="table table-striped table-hover table-bg">
       <thead>
@@ -180,7 +188,19 @@
   </div>
 
 {% endif %} 
-
+  <script>
+    // Live search: hide table rows that do not match what the user types
+    $(document).ready(function () {
+      $("#expense-search").on("input", function () {
+        var searchText = $(this).val().toLowerCase();
+        $("#expense-table tbody tr").each(function () {
+          // only look at the first 5 columns (not the Update / Delete buttons)
+          var rowText = $(this).children("td").slice(0, 5).text().toLowerCase();
+          $(this).toggle(rowText.indexOf(searchText) > -1);
+        });
+      });
+    });
+  </script>
 {% if expenses.has_other_pages %}
 
   <nav id="pagination-container">
