@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
@@ -24,15 +23,10 @@ SECRET_KEY = "^xz#4uh%+(etb!bp+i&ag38i597sith8@67t08o5)+xry*6tx!"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
 
-ALLOWED_HOSTS = [
-    "192.168.1.44",
-    "127.0.0.1",
-    "expense-tracker16.herokuapp.com",
-    "localhost",
-]
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 # Application definition
 
